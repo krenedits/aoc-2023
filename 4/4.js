@@ -34,19 +34,28 @@ const first = numbers.reduce((acc, curr) => {
 
 console.log(first);
 
+const resultCache = {};
+
 const getNumberOfCards = (number, i) => {
   if (!number) return 0;
   if (!number.matched) return 1;
 
-  return (
+  if (resultCache[i]) {
+    return resultCache[i];
+  }
+
+  const result =
     1 +
     numbers
       .slice(i + 1, i + 1 + number.matched)
       .reduce(
         (acc, curr, index) => acc + getNumberOfCards(curr, i + 1 + index),
         0
-      )
-  );
+      );
+
+  resultCache[i] = result;
+
+  return result;
 };
 
 const second = numbers.reduce((acc, curr, index) => {
