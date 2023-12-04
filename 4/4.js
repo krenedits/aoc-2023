@@ -1,6 +1,6 @@
 const { getLines } = require("../common");
 
-const lines = getLines("input_home.txt");
+const lines = getLines("input.txt");
 
 const numbers = [];
 
