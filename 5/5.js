@@ -10,7 +10,7 @@
 
 const { getLines } = require('../common');
 
-const lines = getLines('input_silinfo.txt');
+const lines = getLines('input.txt');
 const seeds = lines[0]
     .split(': ')[1]
     .split(' ')
