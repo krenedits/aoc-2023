@@ -1,6 +1,6 @@
 const { getLines } = require("../common");
 
-const lines = getLines("input_silinfo.txt");
+const lines = getLines("input.txt");
 
 const yValues = lines.map((line) => line.split(" ").map((value) => +value));
 
