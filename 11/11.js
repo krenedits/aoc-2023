@@ -1,6 +1,6 @@
 const { getLines } = require("../common");
 
-const lines = getLines("input_silinfo.txt");
+const lines = getLines("input.txt");
 const GALAXY = "#";
 const galaxies = [];
 
