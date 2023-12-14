@@ -1,6 +1,6 @@
 const { getLines } = require('../common');
 
-const lines = getLines('example.txt');
+const lines = getLines('input.txt');
 
 const getNextIndices = (prev, curr) => {
     const [prevI, prevJ] = prev;
@@ -63,7 +63,7 @@ const getPossibleNeighbourOfStart = () => {
 
 const neighbour = getPossibleNeighbourOfStart();
 
-const corners = [[startI, startJ]];
+const border = [[startI, startJ]];
 
 const traverse = () => {
     let prev = [startI, startJ];
@@ -74,9 +74,7 @@ const traverse = () => {
         const char = lines[currI][currJ];
         if (char === 'S') return count;
         const nextIndices = getNextIndices(prev, curr);
-        if (!['-', '|'].includes(char)) {
-            corners.push(curr);
-        }
+        border.push(curr);
         prev = curr;
         curr = nextIndices;
         count++;
@@ -89,16 +87,34 @@ const first = Math.floor(result / 2);
 
 console.log(first);
 
-const getArea = (corners) => {
-    let area = 0;
-    for (let i = 0; i < corners.length - 1; i++) {
-        const [currI, currJ] = corners[i];
-        const [nextI, nextJ] = corners[i + 1];
-        area += Math.floor((currI * nextJ - currJ * nextI) / 2);
+// replace borders with X
+const markedMap = lines.map((line, i) => {
+    return line.split('').map((char, j) => {
+        if (
+            border.some(([borderI, borderJ]) => borderI === i && borderJ === j)
+        ) {
+            return 'X';
+        }
+        return char;
+    });
+});
+
+let count = 0;
+markedMap.forEach((line, index) => {
+    let i = 0;
+    let isOpen = false;
+
+    while (i < line.length) {
+        if (
+            line[i] === 'X' &&
+            possibleNeighbours.bottom.includes(lines[index][i])
+        ) {
+            isOpen = !isOpen;
+        } else if (line[i] !== 'X' && isOpen) {
+            count++;
+        }
+        i++;
     }
-    return Math.abs(area);
-};
+});
 
-const second = getArea(corners);
-
-console.log(second);
+console.log(count);
